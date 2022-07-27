@@ -8,3 +8,8 @@ nytcy(){hkcmd nyt-cy "$@"}
 nyta-cy(){hkcmd nyta-cy "$@"}
 nytacy(){hkcmd nyta-cy "$@"}
 
+nyti-cy()
+{
+ hkcmd nyti-cy  "$@"
+}
+
