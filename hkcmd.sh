@@ -13,3 +13,8 @@ nyti-cy()
  hkcmd nyti-cy  "$@"
 }
 
+nytz-cy()
+{
+ hkcmd nytz-cy  "$@"
+}
+
