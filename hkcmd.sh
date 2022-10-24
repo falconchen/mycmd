@@ -19,4 +19,8 @@ nytz-cy()
 {
  hkcmd nytz-cy  "$@"
 }
+nytz-yun()
+{
+ hkcmd nytz-yun  "$@"
+}
 
