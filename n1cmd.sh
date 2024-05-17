@@ -7,7 +7,7 @@ ytcc(){n1cmd ytcc "$@"}
 ytai(){n1cmd ytai "$@"}
 yta-mp3(){n1cmd yta-mp3 "$@"}
 n1yt-ali(){n1cmd n1yt-ali "$@"}
-n1yt(){n1cmd n1yt "$@"}
+n1yt(){n1cmd n1yt "$@" && n1cmd tail -f /root/arm64v8-youtube-dl/bin/nyt.log}
 n1yta(){n1cmd n1yta "$@"}
 
 

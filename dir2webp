@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] || [ ! -d "$1" ]; then
+  echo "Usage: $0 DIRNAME QUALITY"
+  exit 1
+fi
+
+
+dir="$1"
+quality=${2:-85}
+
+echo "Start converting files to WEBP in $dir..."
+
+# 遍历目录中的PNG、JPG、JPEG和GIF文件并转换为WEBP
+converted=0
+
+for file in "$dir"/*.{png,jpg,jpeg,gif}; do
+  if [ -f "$file" ]; then
+    if [[ "$file" == *".webp" ]]; then
+        # 如果文件是已经转换后的webp文件，则跳过
+        continue
+    fi
+    webp_file="$file.webp"
+    if [ -f "$webp_file" ]; then
+      # 如果已经存在同名webp文件，则不需要再次转换
+      echo "$webp_file already exists, skipping..."
+    else
+      
+      # 进行转换，并计算转换后的文件数
+      echo "Converting $file to WEBP..."      
+      cwebp -q "$quality" -quiet "$file" -o "$webp_file"
+      if [ $? -eq 0 ]; then
+        converted=$((converted+1))
+        
+      fi
+    fi
+  fi
+done
+
+echo ""
+echo "Successfully converted $converted files to WEBP!"

@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+# 简繁转义
+
+import json
+import requests
+import sys
+import os
+
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+OPENAI_BASE_URL = os.environ.get('OPENAI_BASE_URL')
+
+
+def query(message):
+
+    if len(sys.argv) > 1:
+
+
+        prompt ="你是一名简体繁体汉字转换专家，将用户输入的简体字转换成台湾国语的繁体，或将用户输入的繁体字转换成简体。并且尽量符合当地的用法，如简体`地铁`，繁体为`捷運`；简体`软件`，繁体为`軟體`。 仅输出结果，不要做多余的解释。如果不是汉字，直接输入原文即可。"
+        
+    else:
+        print("简繁转义")
+        print("Usage: jf word")
+        return
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {OPENAI_API_KEY}"
+    }
+
+
+    data = {
+        "model": "gpt-3.5-turbo",
+        "temperature": 0,
+        "top_p": 1,
+        "frequency_penalty": 1,
+        "presence_penalty": 1,
+        "stream": False,
+        "messages": [
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": "计算机的内存不足，我发现太后的头发很干燥"},
+            {"role": "assistant", "content": "電腦的記憶體不足，我發現太后的頭髮很乾燥"},
+
+            {"role": "user", "content": "书"},
+            {"role": "assistant", "content": "書"},
+
+            {"role": "user", "content": "软件"},
+            {"role": "assistant", "content": "軟體"},
+
+            {"role": "user", "content": "軟體"},
+            {"role": "assistant", "content": "软件"},
+
+            {"role": "user", "content": "地铁"},            
+            {"role": "assistant", "content": "捷運"},            
+            
+
+            {"role": "user", "content": "Book"},
+            {"role": "assistant", "content": "Book"},            
+
+            {"role": "user", "content": "MPWeekly 明周 - 電子書"},
+            {"role": "assistant", "content": "MPWeekly 明周 - 电子书"},
+
+            {"role": "user", "content": "我们在老挝的服务器有一些硬盘，曾经多次需要使用互联网算法软件解决异步的问题"},
+            {"role": "assistant", "content": "我們在老撾的服務器有一些硬碟，曾經多次需要使用互聯網算法軟件解決非同步的問題"},
+
+            
+
+            
+            {"role": "user", "content": message}
+        ]
+    }
+
+    response = requests.post(OPENAI_BASE_URL, headers=headers, data=json.dumps(data))
+
+    answer = json.loads(response.content)["choices"][0]["message"]["content"].strip()
+    print("\033[32m---🤖---------\033[0m")
+    print(answer)
+    print("\033[32m--------------\033[0m")
+
+
+if __name__ == "__main__":
+    query(" ".join(sys.argv[1:]))

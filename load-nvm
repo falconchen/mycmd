@@ -1,0 +1,8 @@
+#!/bin/sh
+#export PATH="/Users/falcon/.nvm/versions/node/v20.11.1/bin/node:$PATH"
+# 判断是否存在nvm命令
+if ! command -v nvm &> /dev/null; then
+    # 如果不存在，则执行source命令
+    source /usr/local/opt/nvm/nvm.sh
+fi
+

@@ -1,0 +1,1 @@
+dockerhk(){docker -H zerohk "$@"}
